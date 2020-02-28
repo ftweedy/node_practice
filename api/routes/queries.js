@@ -28,44 +28,67 @@ getUserById = (request, response) => {
 
 createUser = (request, response) => {
     const { name, email } = request.body
-    pool.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error) => {
-        if (error){
-            throw error
+    pool.connect((err, client, release) => {
+        if (err) {
+          throw error
         }
-    })
-    pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
-        if (error){
-            throw error
-        }
-        response.status(200).json(results.row)
+        client.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error) => {
+            if (error){
+                throw error
+            }
+        })
+        client.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+            client.release()
+            if (error){
+                throw error
+            }
+            response.status(200).json(results.rows)
+        })
     })
 }
 
 updateUser = (request, response) => {
     const id = parseInt(request.params.id)
     const { name } = request.body
-    pool.query(
-        'UPDATE users SET name = $1 WHERE id = $2', [name, id], (error, results) => {
-            if (error) {
+
+    pool.connect((err, client, release) => {
+        if (err) {
+          throw error
+        }
+        client.query('UPDATE users SET name = $1 WHERE id = $2', [name, id], (error) => {
+                if (error){
+                    throw error
+                }
+            })
+        client.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+            client.release()
+            if (error){
                 throw error
             }
-            response.status(200).json(results.row)
-        }
-    )
+            response.status(200).json(results.rows)
+        })
+    })
 }
 
 deleteUser = (request, response) => {
     const id = parseInt(request.params.id)
-    pool.query('DELETE FROM users WHERE id = $1', [id], (error) => {
-        if (error){
-            throw error
+
+    pool.connect((err, client, release) => {
+        if (err) {
+          throw error
         }
-    })
-    pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
-        if (error){
-            throw error
-        }
-        response.status(200).json(results.rows)
+        client.query('DELETE FROM users WHERE id = $1', [id], (error) => {
+            if (error){
+                throw error
+            }
+        })
+        client.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+            client.release()
+            if (error){
+                throw error
+            }
+            response.status(200).json(results.rows)
+        })
     })
 }
 

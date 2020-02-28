@@ -10,8 +10,7 @@ class EditUserModal extends Component {
       this.state = {
         form:{
             name: "",
-            age: "",
-            enjoys: ""
+            email: ""
         }
       }
     }
@@ -27,7 +26,7 @@ class EditUserModal extends Component {
     }
 
     defaultState = () => {
-        this.setState({form: this.props.cat})
+        this.setState({form: this.props.user})
     }
 
     handleUpdate = () => {
@@ -43,39 +42,28 @@ class EditUserModal extends Component {
             <Form.Row>
                 <Col>
                 <Form.Group condtrolID="formNameEntry">
-                    <Form.Label id="name">Name</Form.Label>
-                    <FormControl
-                      type="text"
-                      name="name"
-                      onChange={this.handleChange}
-                      value={this.state.form.name}
-                    />
+                  <Form.Label id="name">Name</Form.Label>
+                  <FormControl
+                    type="text"
+                    name="name"
+                    onChange={this.handleChange}
+                    value={this.state.form.name}
+                  />
                 </Form.Group>
                 </Col>
                 <Col>
-                <Form.Group condtrolID="formAgeEntry">
-                    <Form.Label id="age">Age</Form.Label>
-                    <FormControl
-                      type="number"
-                      name="age"
-                      onChange={this.handleChange}
-                      value={this.state.form.age}
-                    />
+                <Form.Group condtrolID="formEmailEntry">
+                  <Form.Label id="email">Email</Form.Label>
+                  <FormControl
+                    type="text"
+                    name="email"
+                    onChange={this.handleChange}
+                    value={this.state.form.email}
+                  />
                 </Form.Group>
                 </Col>
             </Form.Row>
-
-            <Form.Group condtrolID="formEnjoysEntry">
-                <Form.Label id="enjoys">Enjoys</Form.Label>
-                <FormControl
-                  type="text"
-                  name="enjoys"
-                  onChange={this.handleChange}
-                  value={this.state.form.enjoys}
-                />
-            </Form.Group>
-
-            <button id="submit" type="submit" onClick={this.handleUpdate}>Edit Cat Profile</button>
+            <button onClick={this.handleUpdate}>Edit Cat Profile</button>
             </Form>
         </Col>
         </Modal>

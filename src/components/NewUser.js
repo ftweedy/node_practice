@@ -1,13 +1,11 @@
 import React, {Component} from 'react'
-import {
-  Col, Container, Row, FormControl, Form
-} from 'react-bootstrap'
+import { Col, Container, Row, FormControl, Form } from 'react-bootstrap'
 
 class NewUser extends Component {
     constructor(props){
       super(props)
       this.state = {
-        form:{
+        form: {
           name: '',
           email: ''
         }

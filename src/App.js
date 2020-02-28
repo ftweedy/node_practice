@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+// import fetch from 'isomorphic-fetch'
+// import 'es6-promise'
 
 import Header from "./components/Header"
 import Users from "./components/Users"
@@ -10,7 +12,7 @@ class App extends Component {
     super(props)
     this.state = { 
       apiResponse: "",
-      users: {},
+      users: [],
       isOpen: false,
       isEdit: false ,
       promiseIsResolved: false
@@ -71,7 +73,7 @@ class App extends Component {
         return response.json()
       })
       .then((json) => {
-        this.setState({ users: json})
+        this.setState({ users: json })
       })
   }
 
@@ -98,8 +100,7 @@ class App extends Component {
       <div className="App">
         <Header />
         <br />
-        {<Users users={this.state.users} delete={this.destroyUser}/>
-        /*toggle={this.toggleModal} toggleEdit={this.toggleEdit} isOpen={this.state.isOpen} isEdit={this.state.isEdit} edit={this.edit}/> */}
+        {<Users users={this.state.users} delete={this.destroyUser} isEdit={this.state.isEdit} edit={this.editUser} toggleEdit={this.toggleEdit} toggle={this.toggleModal} isOpen={this.state.isOpen}/>}
         <br />
         <NewUser users={this.state.users} createUser={this.createUser}/>
       </div>
